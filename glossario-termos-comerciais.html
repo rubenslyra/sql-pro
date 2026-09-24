@@ -1,0 +1,531 @@
+<html style="margin:0;padding:0;">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+(function(){
+  var s = document.createElement('style');
+  s.textContent = ':root{--bg:#202024;--card:#2a2a2f;--text:#e8e5df;--muted:#9a978f;--accent:#c47046;--accent-soft:rgba(196,112,70,.14);--accent2:#7ba8b8;--accent2-soft:rgba(123,168,184,.14);--border:rgba(232,229,223,.12)}'+
+  '.chip{cursor:pointer;transition:all .18s ease;border:1px solid var(--border);color:var(--muted);background:transparent}'+
+  '.chip:hover{color:var(--text);border-color:var(--muted)}'+
+  '.chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}'+
+  '.term-card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;border:1px solid var(--border);background:var(--card)}'+
+  '.term-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.25)}'+
+  '.copy-btn{cursor:pointer;opacity:.45;transition:opacity .15s ease,color .15s ease;color:var(--muted)}'+
+  '.copy-btn:hover{opacity:1;color:var(--accent)}'+
+  '.copy-btn.copied{color:#7bb87b;opacity:1}'+
+  '.kind-T{background:rgba(123,168,184,.14);color:#9cc4d4;border:1px solid rgba(123,168,184,.3)}'+
+  '.kind-C{background:rgba(196,112,70,.14);color:#d49a76;border:1px solid rgba(196,112,70,.3)}'+
+  '.kind-S{background:rgba(186,59,91,.16);color:#d47b96;border:1px solid rgba(186,59,91,.35)}'+
+  '.kind-X{background:rgba(123,184,123,.14);color:#96c996;border:1px solid rgba(123,184,123,.3)}'+
+  'mark{background:var(--accent);color:#202024;border-radius:2px;padding:0 2px}'+
+  '.reveal{opacity:0;transform:translateY(16px);animation:fadeUp .5s ease forwards}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}';
+  document.head.appendChild(s);
+})();
+</script>
+<div style="background-color:transparent;box-sizing:border-box;">
+<div style="color:var(--text);font-family:'Sora',sans-serif;background:radial-gradient(900px 400px at 85% -5%, rgba(196,112,70,.10), transparent 60%), var(--bg);min-height:100%;">
+<div class="max-w-6xl mx-auto px-5 py-10">
+
+  <!-- HERO -->
+  <div class="reveal mb-8">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+      <div style="width:46px;height:46px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+      </div>
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);">Ubiquitous Language · DDD</p>
+        <h1 class="text-3xl md:text-4xl font-bold" style="line-height:1.15;letter-spacing:-.02em;">Glossário de Banco de Dados</h1>
+      </div>
+    </div>
+    <p style="color:var(--muted);max-width:640px;line-height:1.6;" class="text-sm md:text-base mt-2">Termos comerciais e técnicos em inglês usados em tabelas, colunas e arquitetura de sistemas empresariais (ERP, CRM, e-commerce, logística, SaaS). Busque por nome, tradução ou uso — clique no termo para copiar.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="reveal flex flex-wrap gap-3 mb-8" id="statsRow">
+    <div class="rounded-xl px-4 py-3" style="background:var(--card);border:1px solid var(--border);flex:1 1 140px;">
+      <div class="text-2xl font-bold" id="statTerms" style="font-variant-numeric:tabular-nums;">—</div>
+      <div class="text-xs mt-1" style="color:var(--muted);">termos indexados</div>
+    </div>
+    <div class="rounded-xl px-4 py-3" style="background:var(--card);border:1px solid var(--border);flex:1 1 140px;">
+      <div class="text-2xl font-bold" style="color:var(--accent2);font-variant-numeric:tabular-nums;">15</div>
+      <div class="text-xs mt-1" style="color:var(--muted);">domínios de negócio</div>
+    </div>
+    <div class="rounded-xl px-4 py-3" style="background:var(--card);border:1px solid var(--border);flex:1 1 140px;">
+      <div class="text-2xl font-bold" style="color:var(--accent);font-variant-numeric:tabular-nums;">4</div>
+      <div class="text-xs mt-1" style="color:var(--muted);">tipos: Tabela · Coluna · Status · Sistema</div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="reveal mb-5">
+    <div style="position:relative;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" placeholder="Buscar termo, tradução ou uso...  (ex: shipment, funcionário, frete)"
+        class="w-full rounded-xl text-sm md:text-base"
+        style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:14px 16px 14px 44px;outline:none;transition:border-color .15s ease;"
+        onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+  </div>
+
+  <!-- DOMAIN CHIPS -->
+  <div class="reveal flex flex-wrap gap-2 mb-6" id="chips"></div>
+
+  <!-- RESULT COUNT -->
+  <div class="flex items-center justify-between mb-4">
+    <p class="text-xs" style="color:var(--muted);"><span id="resultCount" style="color:var(--text);font-weight:600;">0</span> termos encontrados</p>
+    <p class="text-xs" style="color:var(--muted);font-family:'JetBrains Mono',monospace;">clique no termo para copiar</p>
+  </div>
+
+  <!-- CARDS GRID -->
+  <div id="grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+
+  <!-- EMPTY STATE -->
+  <div id="empty" class="hidden rounded-xl p-10 text-center" style="background:var(--card);border:1px dashed var(--border);">
+    <p style="color:var(--muted);">Nenhum termo encontrado. Tente outra busca ou limpe o filtro.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="mt-12 pt-6" style="border-top:1px solid var(--border);">
+    <p class="text-center text-xs" style="color:var(--muted);line-height:1.7;">Padrão recomendado: PascalCase · tabelas no singular · PK <span style="font-family:'JetBrains Mono',monospace;">Id</span> · FK <span style="font-family:'JetBrains Mono',monospace;">NomeTabelaId</span> · auditoria <span style="font-family:'JetBrains Mono',monospace;">CreatedAt/CreatedBy/UpdatedAt/UpdatedBy</span></p>
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+  // d = domain index, k = kind: T=tabela/entidade, C=coluna/campo, S=status/estado, X=conceito/sistema
+  var DOMAINS = [
+    {n:"Corporativo", c:"#c47046"},
+    {n:"RH / Pessoas", c:"#7ba8b8"},
+    {n:"CRM / Cliente", c:"#e0a458"},
+    {n:"Vendas", c:"#8ab87b"},
+    {n:"Estoque / Produtos", c:"#b87bb0"},
+    {n:"Compras", c:"#6b8fd4"},
+    {n:"Logística", c:"#d46b6b"},
+    {n:"Financeiro", c:"#6bc4b0"},
+    {n:"Fiscal / Tributário", c:"#c4c46b"},
+    {n:"Produção", c:"#a07bd4"},
+    {n:"Projetos / Serviços", c:"#d49a6b"},
+    {n:"SaaS / Assinaturas", c:"#6bb0d4"},
+    {n:"Auth / Segurança", c:"#b8a07b"},
+    {n:"Campos Padrão", c:"#7bb89a"},
+    {n:"Arquitetura / Eng.", c:"#d47b9a"}
+  ];
+  var KIND = {T:"Tabela", C:"Coluna", S:"Status", X:"Sistema"};
+  var DATA = [
+    // Corporativo
+    {t:"Company",pt:"Empresa (matriz)",u:"Tabela raiz em multi-tenant",d:0,k:"T"},
+    {t:"Branch",pt:"Filial / unidade",u:"Unidades da empresa",d:0,k:"T"},
+    {t:"Department",pt:"Departamento",u:"Estrutura organizacional",d:0,k:"T"},
+    {t:"BusinessUnit",pt:"Unidade de negócio",u:"BU em corporações",d:0,k:"T"},
+    {t:"CostCenter",pt:"Centro de custo",u:"Controladoria",d:0,k:"T"},
+    {t:"ProfitCenter",pt:"Centro de resultado",u:"Controladoria",d:0,k:"T"},
+    {t:"Address",pt:"Endereço",u:"Tabela auxiliar 1:N",d:0,k:"T"},
+    {t:"Contact",pt:"Contato",u:"Dados de contato genéricos",d:0,k:"T"},
+    {t:"AuditLog",pt:"Log de auditoria",u:"Quem alterou o quê",d:0,k:"T"},
+    {t:"Currency",pt:"Moeda",u:"BRL, USD, EUR",d:0,k:"T"},
+    {t:"ExchangeRate",pt:"Taxa de câmbio",u:"Conversão monetária",d:0,k:"T"},
+    {t:"Region",pt:"Região / território",u:"Vendas/representação",d:0,k:"T"},
+    // RH
+    {t:"Employee",pt:"Funcionário / colaborador",u:"Tabela principal de RH",d:1,k:"T"},
+    {t:"Position",pt:"Cargo / função",u:"Catálogo de cargos",d:1,k:"T"},
+    {t:"Manager",pt:"Gestor / supervisor",u:"Auto-relacionamento em Employee",d:1,k:"C"},
+    {t:"Payroll",pt:"Folha de pagamento",u:"Cabeçalho da folha",d:1,k:"T"},
+    {t:"PayrollItem",pt:"Item da folha",u:"Verbas (salário, hora extra)",d:1,k:"T"},
+    {t:"Salary",pt:"Salário / remuneração",u:"Histórico salarial",d:1,k:"T"},
+    {t:"Benefit",pt:"Benefício",u:"VR, VT, plano de saúde",d:1,k:"T"},
+    {t:"Dependent",pt:"Dependente",u:"IR/benefícios",d:1,k:"T"},
+    {t:"Attendance",pt:"Frequência / ponto",u:"Batidas de ponto",d:1,k:"T"},
+    {t:"Timesheet",pt:"Apontamento de horas",u:"Horas trabalhadas",d:1,k:"T"},
+    {t:"Leave",pt:"Afastamento / licença",u:"Férias, licenças",d:1,k:"T"},
+    {t:"LeaveRequest",pt:"Solicitação de afastamento",u:"Workflow de aprovação",d:1,k:"T"},
+    {t:"Vacation",pt:"Férias",u:"Período aquisitivo/gozo",d:1,k:"T"},
+    {t:"Overtime",pt:"Hora extra",u:"Cálculo de horas",d:1,k:"T"},
+    {t:"Shift",pt:"Turno",u:"Escala de trabalho",d:1,k:"T"},
+    {t:"Candidate",pt:"Candidato",u:"Vagas de emprego",d:1,k:"T"},
+    {t:"JobOpening",pt:"Vaga de emprego",u:"Oportunidades abertas",d:1,k:"T"},
+    {t:"Interview",pt:"Entrevista",u:"Etapa seletiva",d:1,k:"T"},
+    {t:"Termination",pt:"Demissão / desligamento",u:"Desligamentos",d:1,k:"T"},
+    {t:"Training",pt:"Treinamento / curso",u:"Desenvolvimento",d:1,k:"T"},
+    {t:"Certificate",pt:"Certificado",u:"Certificações",d:1,k:"T"},
+    {t:"Skill",pt:"Competência / habilidade",u:"Matriz de skills",d:1,k:"T"},
+    {t:"PerformanceReview",pt:"Avaliação de desempenho",u:"PDR/performance",d:1,k:"T"},
+    {t:"Contract",pt:"Contrato",u:"Trabalho/fornecimento",d:1,k:"T"},
+    // CRM
+    {t:"Customer",pt:"Cliente",u:"Tabela principal B2C/B2B",d:2,k:"T"},
+    {t:"Lead",pt:"Lead",u:"Contato qualificado",d:2,k:"T"},
+    {t:"Prospect",pt:"Prospect",u:"Potencial cliente",d:2,k:"T"},
+    {t:"Account",pt:"Conta (B2B)",u:"Empresa cliente",d:2,k:"T"},
+    {t:"Opportunity",pt:"Oportunidade",u:"Negócio em aberto",d:2,k:"T"},
+    {t:"Pipeline",pt:"Funil de vendas",u:"Estágios do funil",d:2,k:"X"},
+    {t:"Stage",pt:"Etapa do funil",u:"Prospecção → fechamento",d:2,k:"T"},
+    {t:"Campaign",pt:"Campanha",u:"Marketing",d:2,k:"T"},
+    {t:"LeadSource",pt:"Origem do lead",u:"Google, indicação",d:2,k:"T"},
+    {t:"CustomerSegment",pt:"Segmento de cliente",u:"Classificação",d:2,k:"T"},
+    {t:"LoyaltyProgram",pt:"Programa de fidelidade",u:"Pontos e recompensas",d:2,k:"T"},
+    {t:"PointsBalance",pt:"Saldo de pontos",u:"Fidelidade",d:2,k:"C"},
+    {t:"Referral",pt:"Indicação",u:"Indicação de cliente",d:2,k:"T"},
+    {t:"SupportTicket",pt:"Chamado de suporte",u:"Atendimento",d:2,k:"T"},
+    {t:"SLA",pt:"Acordo de nível de serviço",u:"Prazos de atendimento",d:2,k:"X"},
+    {t:"Survey",pt:"Pesquisa / feedback",u:"NPS, CSAT",d:2,k:"T"},
+    {t:"Churn",pt:"Evasão / cancelamento",u:"Perda de cliente",d:2,k:"X"},
+    {t:"LifetimeValue",pt:"Valor de vida do cliente (LTV)",u:"Métrica",d:2,k:"X"},
+    // Vendas
+    {t:"SalesOrder",pt:"Pedido de venda",u:"Cabeçalho do pedido",d:3,k:"T"},
+    {t:"OrderItem",pt:"Item do pedido",u:"Itens 1:N",d:3,k:"T"},
+    {t:"Quote",pt:"Cotação / orçamento",u:"Proposta comercial",d:3,k:"T"},
+    {t:"Invoice",pt:"Nota fiscal / fatura",u:"Faturamento",d:3,k:"T"},
+    {t:"InvoiceItem",pt:"Item da nota/fatura",u:"Itens faturados",d:3,k:"T"},
+    {t:"Receipt",pt:"Recibo",u:"Comprovante",d:3,k:"T"},
+    {t:"SalesReturn",pt:"Devolução de venda",u:"Devoluções",d:3,k:"T"},
+    {t:"Refund",pt:"Reembolso",u:"Devolução de dinheiro",d:3,k:"T"},
+    {t:"Discount",pt:"Desconto",u:"Por valor/percentual",d:3,k:"T"},
+    {t:"Coupon",pt:"Cupom / vale",u:"Promoções",d:3,k:"T"},
+    {t:"Promotion",pt:"Promoção",u:"Regras promocionais",d:3,k:"T"},
+    {t:"Bundle",pt:"Combo / kit",u:"Produtos agrupados",d:3,k:"T"},
+    {t:"ShoppingCart",pt:"Carrinho de compras",u:"Sessão de compra",d:3,k:"T"},
+    {t:"CartItem",pt:"Item do carrinho",u:"Itens temporários",d:3,k:"T"},
+    {t:"Checkout",pt:"Finalização de compra",u:"Etapa de pagamento",d:3,k:"X"},
+    {t:"Salesperson",pt:"Vendedor / representante",u:"Responsável pela venda",d:3,k:"T"},
+    {t:"Commission",pt:"Comissão",u:"Cálculo de comissão",d:3,k:"T"},
+    {t:"Target",pt:"Meta / cota",u:"Metas de vendas",d:3,k:"T"},
+    {t:"PriceList",pt:"Tabela de preços",u:"Preços por segmento",d:3,k:"T"},
+    {t:"UnitPrice",pt:"Preço unitário",u:"Coluna em itens",d:3,k:"C"},
+    {t:"Subtotal",pt:"Subtotal",u:"Soma dos itens",d:3,k:"C"},
+    {t:"GrandTotal",pt:"Total geral",u:"Valor final",d:3,k:"C"},
+    {t:"PaymentTerm",pt:"Condição de pagamento",u:"À vista, 30/60/90",d:3,k:"T"},
+    {t:"Installment",pt:"Parcela",u:"Parcelas",d:3,k:"T"},
+    {t:"CreditLimit",pt:"Limite de crédito",u:"Cliente B2B",d:3,k:"C"},
+    {t:"Backorder",pt:"Pedido pendente (sem estoque)",u:"Entrega futura",d:3,k:"S"},
+    {t:"OrderStatus",pt:"Status do pedido",u:"Enum de estado",d:3,k:"C"},
+    // Estoque
+    {t:"Product",pt:"Produto",u:"Cadastro principal",d:4,k:"T"},
+    {t:"SKU",pt:"Código do produto (SKU)",u:"Identificador único",d:4,k:"C"},
+    {t:"Barcode",pt:"Código de barras (EAN/GTIN)",u:"Leitura",d:4,k:"C"},
+    {t:"Category",pt:"Categoria",u:"Classificação",d:4,k:"T"},
+    {t:"Brand",pt:"Marca / fabricante",u:"Fabricante",d:4,k:"T"},
+    {t:"Variant",pt:"Variação",u:"Cor, tamanho (e-commerce)",d:4,k:"T"},
+    {t:"UnitOfMeasure",pt:"Unidade de medida (UOM)",u:"UN, KG, MT, LT",d:4,k:"T"},
+    {t:"Warehouse",pt:"Depósito / almoxarifado",u:"Local de estoque",d:4,k:"T"},
+    {t:"BinLocation",pt:"Posição / endereço",u:"Rua, módulo, nível",d:4,k:"T"},
+    {t:"Stock",pt:"Estoque / saldo",u:"Saldo atual",d:4,k:"T"},
+    {t:"InventoryMovement",pt:"Movimentação de estoque",u:"Entradas/saídas",d:4,k:"T"},
+    {t:"StockAdjustment",pt:"Ajuste de estoque",u:"Inventário",d:4,k:"T"},
+    {t:"ReorderPoint",pt:"Ponto de reposição",u:"Estoque mínimo",d:4,k:"C"},
+    {t:"SafetyStock",pt:"Estoque de segurança",u:"Buffer",d:4,k:"C"},
+    {t:"Lot",pt:"Lote",u:"Controle de lote",d:4,k:"T"},
+    {t:"SerialNumber",pt:"Número de série",u:"Rastreabilidade unitária",d:4,k:"C"},
+    {t:"ExpirationDate",pt:"Data de validade",u:"Perecíveis",d:4,k:"C"},
+    {t:"GoodsReceipt",pt:"Entrada de mercadoria",u:"Recebimento de compra",d:4,k:"T"},
+    {t:"GoodsIssue",pt:"Saída de mercadoria",u:"Baixa de estoque",d:4,k:"T"},
+    {t:"StockTransfer",pt:"Transferência de estoque",u:"Entre depósitos",d:4,k:"T"},
+    {t:"Reservation",pt:"Reserva de estoque",u:"Pedido reservado",d:4,k:"T"},
+    {t:"Picking",pt:"Separação de pedido",u:"Etapa do armazém",d:4,k:"X"},
+    {t:"BillOfMaterials",pt:"Lista de materiais (BOM)",u:"Estrutura do produto",d:4,k:"T"},
+    // Compras
+    {t:"Supplier",pt:"Fornecedor",u:"Cadastro",d:5,k:"T"},
+    {t:"PurchaseOrder",pt:"Pedido de compra (PO)",u:"Cabeçalho",d:5,k:"T"},
+    {t:"PurchaseRequisition",pt:"Requisição de compra",u:"Solicitação interna",d:5,k:"T"},
+    {t:"RequestForQuotation",pt:"Pedido de cotação (RFQ)",u:"Cotação com fornecedores",d:5,k:"T"},
+    {t:"PurchaseInvoice",pt:"Nota fiscal de entrada",u:"Entrada fiscal",d:5,k:"T"},
+    {t:"GoodsReceiptNote",pt:"Nota de recebimento (GRN)",u:"Conferência de entrega",d:5,k:"T"},
+    {t:"ThreeWayMatch",pt:"Conferência tripartite",u:"PO × NF × recebimento",d:5,k:"X"},
+    {t:"DropShipment",pt:"Remessa direta",u:"Fornecedor envia direto ao cliente",d:5,k:"X"},
+    {t:"Consignment",pt:"Consignação",u:"Estoque do fornecedor",d:5,k:"X"},
+    // Logística
+    {t:"Shipment",pt:"Remessa / envio",u:"Tabela central de envios",d:6,k:"T"},
+    {t:"ShipmentItem",pt:"Item da remessa",u:"Itens enviados",d:6,k:"T"},
+    {t:"Carrier",pt:"Transportadora",u:"Prestadora de serviço",d:6,k:"T"},
+    {t:"FreightForwarder",pt:"Despachante / agente de carga",u:"Intermediário",d:6,k:"T"},
+    {t:"Delivery",pt:"Entrega",u:"Entrega ao destinatário",d:6,k:"T"},
+    {t:"DeliveryNote",pt:"Romaneio / nota de entrega",u:"Documento de entrega",d:6,k:"T"},
+    {t:"TrackingNumber",pt:"Código de rastreio",u:"Código da transportadora",d:6,k:"C"},
+    {t:"TrackingEvent",pt:"Evento de rastreio",u:"Postado, em trânsito, entregue",d:6,k:"T"},
+    {t:"ShipmentStatus",pt:"Status do envio",u:"Enum de estado",d:6,k:"C"},
+    {t:"Waybill",pt:"Conhecimento de transporte (CT-e)",u:"Documento fiscal",d:6,k:"T"},
+    {t:"Manifest",pt:"Manifesto de carga",u:"Lista de CT-e",d:6,k:"T"},
+    {t:"Route",pt:"Rota",u:"Planejamento de rotas",d:6,k:"T"},
+    {t:"DeliveryStop",pt:"Parada de entrega",u:"Pontos na rota",d:6,k:"T"},
+    {t:"Driver",pt:"Motorista",u:"Cadastro",d:6,k:"T"},
+    {t:"Vehicle",pt:"Veículo / caminhão",u:"Frota",d:6,k:"T"},
+    {t:"Package",pt:"Pacote / encomenda",u:"Volume",d:6,k:"T"},
+    {t:"Pallet",pt:"Palete",u:"Unitização",d:6,k:"T"},
+    {t:"GrossWeight",pt:"Peso bruto",u:"Cubagem",d:6,k:"C"},
+    {t:"NetWeight",pt:"Peso líquido",u:"Cubagem",d:6,k:"C"},
+    {t:"Freight",pt:"Frete",u:"Custo de envio",d:6,k:"C"},
+    {t:"CargoInsurance",pt:"Seguro de carga",u:"Avaria/perda",d:6,k:"T"},
+    {t:"Origin",pt:"Origem",u:"Endereço de origem",d:6,k:"C"},
+    {t:"Destination",pt:"Destino",u:"Endereço de destino",d:6,k:"C"},
+    {t:"Consignee",pt:"Destinatário",u:"Quem recebe",d:6,k:"T"},
+    {t:"Pickup",pt:"Coleta / retirada",u:"Retirada no local",d:6,k:"X"},
+    {t:"InTransit",pt:"Em trânsito",u:"Status",d:6,k:"S"},
+    {t:"OutForDelivery",pt:"Saiu para entrega",u:"Status final",d:6,k:"S"},
+    {t:"Delivered",pt:"Entregue",u:"Status final",d:6,k:"S"},
+    {t:"ReverseLogistics",pt:"Logística reversa",u:"Devolução",d:6,k:"X"},
+    {t:"LastMile",pt:"Última milha",u:"Entrega final",d:6,k:"X"},
+    {t:"Incoterms",pt:"Incoterms",u:"FOB, CIF, EXW",d:6,k:"X"},
+    // Financeiro
+    {t:"ChartOfAccounts",pt:"Plano de contas",u:"Estrutura contábil",d:7,k:"T"},
+    {t:"GeneralLedger",pt:"Livro razão (GL)",u:"Lançamentos contábeis",d:7,k:"T"},
+    {t:"JournalEntry",pt:"Lançamento contábil",u:"Débito/crédito",d:7,k:"T"},
+    {t:"Transaction",pt:"Transação",u:"Movimento financeiro",d:7,k:"T"},
+    {t:"Payment",pt:"Pagamento",u:"Saída/entrada de dinheiro",d:7,k:"T"},
+    {t:"AccountReceivable",pt:"Contas a receber (AR)",u:"Título de cliente",d:7,k:"T"},
+    {t:"AccountPayable",pt:"Contas a pagar (AP)",u:"Título de fornecedor",d:7,k:"T"},
+    {t:"Balance",pt:"Saldo",u:"Valor atual",d:7,k:"C"},
+    {t:"BankReconciliation",pt:"Conciliação bancária",u:"Extrato × sistema",d:7,k:"T"},
+    {t:"Deposit",pt:"Depósito",u:"Entrada em conta",d:7,k:"T"},
+    {t:"Transfer",pt:"Transferência",u:"Entre contas",d:7,k:"T"},
+    {t:"Chargeback",pt:"Chargeback",u:"Contestação de cartão",d:7,k:"T"},
+    {t:"Interest",pt:"Juros",u:"Mora",d:7,k:"C"},
+    {t:"Penalty",pt:"Multa",u:"Mora",d:7,k:"C"},
+    {t:"DueDate",pt:"Data de vencimento",u:"Vencimento do título",d:7,k:"C"},
+    {t:"IssueDate",pt:"Data de emissão",u:"Emissão",d:7,k:"C"},
+    {t:"Overdue",pt:"Atrasado",u:"Status do título",d:7,k:"S"},
+    {t:"WriteOff",pt:"Baixa / prejuízo",u:"Título irrecoverável",d:7,k:"X"},
+    {t:"Dunning",pt:"Cobrança / inadimplência",u:"Processo de cobrança",d:7,k:"X"},
+    {t:"PaymentMethod",pt:"Forma de pagamento",u:"Boleto, cartão, Pix, TED",d:7,k:"T"},
+    {t:"PaymentGateway",pt:"Gateway de pagamento",u:"Stripe, Pagar.me",d:7,k:"X"},
+    {t:"Wallet",pt:"Carteira digital",u:"Saldo virtual",d:7,k:"T"},
+    {t:"BalanceSheet",pt:"Balanço patrimonial",u:"Relatório",d:7,k:"X"},
+    {t:"IncomeStatement",pt:"DRE / P&L",u:"Relatório de resultado",d:7,k:"X"},
+    {t:"CashFlow",pt:"Fluxo de caixa",u:"Relatório",d:7,k:"X"},
+    {t:"Budget",pt:"Orçamento / previsão",u:"Planejamento",d:7,k:"T"},
+    {t:"Revenue",pt:"Receita",u:"Faturamento",d:7,k:"C"},
+    {t:"Expense",pt:"Despesa",u:"Natureza do gasto",d:7,k:"T"},
+    {t:"Asset",pt:"Ativo",u:"Balanço",d:7,k:"T"},
+    {t:"Liability",pt:"Passivo",u:"Balanço",d:7,k:"T"},
+    {t:"Equity",pt:"Patrimônio líquido",u:"Balanço",d:7,k:"T"},
+    {t:"Depreciation",pt:"Depreciação",u:"Ativo imobilizado",d:7,k:"X"},
+    // Fiscal
+    {t:"Tax",pt:"Imposto / tributo",u:"Geral",d:8,k:"T"},
+    {t:"TaxRate",pt:"Alíquota",u:"Percentual",d:8,k:"C"},
+    {t:"TaxBase",pt:"Base de cálculo",u:"Valor base",d:8,k:"C"},
+    {t:"TaxAmount",pt:"Valor do imposto",u:"Coluna fiscal",d:8,k:"C"},
+    {t:"TaxJurisdiction",pt:"Jurisdição tributária",u:"Município/UF/país",d:8,k:"T"},
+    {t:"TaxExemption",pt:"Isenção",u:"Benefício fiscal",d:8,k:"T"},
+    {t:"WithholdingTax",pt:"Retenção na fonte",u:"IRRF, INSS, PIS/COFINS",d:8,k:"T"},
+    {t:"ElectronicInvoice",pt:"Nota fiscal eletrônica",u:"NF-e / NFS-e",d:8,k:"T"},
+    {t:"InvoiceSeries",pt:"Série da nota",u:"Série",d:8,k:"C"},
+    {t:"AccessKey",pt:"Chave de acesso",u:"44 dígitos (NF-e)",d:8,k:"C"},
+    {t:"CorrectionLetter",pt:"Carta de correção (CC-e)",u:"Ajuste de NF",d:8,k:"T"},
+    {t:"TaxRegime",pt:"Regime tributário",u:"Lucro Real/Presumido/Simples",d:8,k:"T"},
+    // Produção
+    {t:"WorkOrder",pt:"Ordem de produção",u:"Cabeçalho",d:9,k:"T"},
+    {t:"ProductionPlan",pt:"Plano de produção",u:"Planejamento",d:9,k:"T"},
+    {t:"Routing",pt:"Roteiro de produção",u:"Sequência de operações",d:9,k:"T"},
+    {t:"Operation",pt:"Operação / etapa",u:"Etapa do roteiro",d:9,k:"T"},
+    {t:"WorkCenter",pt:"Centro de trabalho / máquina",u:"Recurso produtivo",d:9,k:"T"},
+    {t:"Capacity",pt:"Capacidade",u:"Carga da máquina",d:9,k:"C"},
+    {t:"RawMaterial",pt:"Matéria-prima",u:"Insumo",d:9,k:"T"},
+    {t:"FinishedGoods",pt:"Produto acabado",u:"Final",d:9,k:"T"},
+    {t:"Scrap",pt:"Refugo / perda",u:"Perda na produção",d:9,k:"T"},
+    {t:"Yield",pt:"Rendimento",u:"Aproveitamento",d:9,k:"C"},
+    {t:"QualityControl",pt:"Controle da qualidade (QC)",u:"Inspeção",d:9,k:"X"},
+    {t:"Inspection",pt:"Inspeção",u:"Verificação",d:9,k:"T"},
+    {t:"Defect",pt:"Defeito",u:"Não conformidade",d:9,k:"T"},
+    {t:"MaintenanceOrder",pt:"Ordem de manutenção",u:"Preventiva/corretiva",d:9,k:"T"},
+    {t:"Downtime",pt:"Parada / inatividade",u:"Tempo parado",d:9,k:"T"},
+    // Projetos
+    {t:"Project",pt:"Projeto",u:"Cabeçalho",d:10,k:"T"},
+    {t:"Task",pt:"Tarefa / atividade",u:"Itens do projeto",d:10,k:"T"},
+    {t:"Subtask",pt:"Subtarefa",u:"Nível abaixo",d:10,k:"T"},
+    {t:"Milestone",pt:"Marco / milestone",u:"Entrega importante",d:10,k:"T"},
+    {t:"Sprint",pt:"Sprint",u:"Scrum",d:10,k:"T"},
+    {t:"Epic",pt:"Épico",u:"Backlog",d:10,k:"T"},
+    {t:"UserStory",pt:"História de usuário",u:"Backlog",d:10,k:"T"},
+    {t:"Bug",pt:"Bug / demanda",u:"Ticketing",d:10,k:"T"},
+    {t:"TimeEntry",pt:"Lançamento de hora",u:"Item do timesheet",d:10,k:"T"},
+    {t:"Resource",pt:"Recurso (pessoa/equipamento)",u:"Alocação",d:10,k:"T"},
+    {t:"Allocation",pt:"Alocação",u:"Recurso no projeto",d:10,k:"T"},
+    {t:"Deliverable",pt:"Entregável",u:"Produto do projeto",d:10,k:"T"},
+    {t:"ChangeRequest",pt:"Solicitação de mudança",u:"Escopo",d:10,k:"T"},
+    {t:"Risk",pt:"Risco",u:"Gestão de riscos",d:10,k:"T"},
+    {t:"Phase",pt:"Fase / etapa",u:"Waterfall",d:10,k:"T"},
+    // SaaS
+    {t:"Tenant",pt:"Tenancy / inquilino",u:"Multi-tenant (SaaS)",d:11,k:"T"},
+    {t:"Subscription",pt:"Assinatura",u:"Recorrência",d:11,k:"T"},
+    {t:"Plan",pt:"Plano / tier",u:"Free, Pro, Enterprise",d:11,k:"T"},
+    {t:"Feature",pt:"Funcionalidade",u:"Recursos do plano",d:11,k:"T"},
+    {t:"Usage",pt:"Uso / consumo",u:"API/armazenamento",d:11,k:"T"},
+    {t:"Quota",pt:"Cota / limite",u:"Limites do plano",d:11,k:"C"},
+    {t:"BillingCycle",pt:"Ciclo de cobrança",u:"Mensal/anual",d:11,k:"C"},
+    {t:"Renewal",pt:"Renovação",u:"Renovação de assinatura",d:11,k:"T"},
+    {t:"FreeTrial",pt:"Período de teste",u:"Trial",d:11,k:"T"},
+    {t:"Upgrade",pt:"Upgrade",u:"Mudança de plano",d:11,k:"X"},
+    {t:"Downgrade",pt:"Downgrade",u:"Mudança de plano",d:11,k:"X"},
+    {t:"Proration",pt:"Proporcional",u:"Mudança de plano",d:11,k:"X"},
+    {t:"Workspace",pt:"Workspace / organização",u:"Grupo de usuários",d:11,k:"T"},
+    {t:"Membership",pt:"Associação / membro",u:"Usuário no workspace",d:11,k:"T"},
+    {t:"Invitation",pt:"Convite",u:"Convite de usuário",d:11,k:"T"},
+    {t:"APIKey",pt:"Chave de API",u:"Acesso programático",d:11,k:"C"},
+    {t:"Webhook",pt:"Webhook",u:"Notificação de evento",d:11,k:"T"},
+    {t:"EventLog",pt:"Log de eventos",u:"Event sourcing",d:11,k:"T"},
+    {t:"Notification",pt:"Notificação",u:"Push/e-mail/in-app",d:11,k:"T"},
+    // Auth
+    {t:"User",pt:"Usuário",u:"Tabela principal",d:12,k:"T"},
+    {t:"Role",pt:"Perfil / papel",u:"RBAC",d:12,k:"T"},
+    {t:"Permission",pt:"Permissão / privilégio",u:"Acesso",d:12,k:"T"},
+    {t:"UserRole",pt:"Perfil do usuário",u:"Tabela N:N",d:12,k:"T"},
+    {t:"RolePermission",pt:"Permissão do perfil",u:"Tabela N:N",d:12,k:"T"},
+    {t:"Group",pt:"Grupo",u:"Agrupamento de usuários",d:12,k:"T"},
+    {t:"Session",pt:"Sessão",u:"Login ativo",d:12,k:"T"},
+    {t:"Token",pt:"Token",u:"JWT",d:12,k:"C"},
+    {t:"RefreshToken",pt:"Token de renovação",u:"JWT",d:12,k:"T"},
+    {t:"PasswordHash",pt:"Hash de senha",u:"Coluna",d:12,k:"C"},
+    {t:"PasswordReset",pt:"Redefinição de senha",u:"Token temporário",d:12,k:"T"},
+    {t:"TwoFactor",pt:"Autenticação multifator (2FA/MFA)",u:"Segurança",d:12,k:"X"},
+    {t:"LoginAttempt",pt:"Tentativa de login",u:"Brute-force",d:12,k:"T"},
+    {t:"Lockout",pt:"Bloqueio de conta",u:"Tentativas inválidas",d:12,k:"S"},
+    {t:"ActivityLog",pt:"Log de atividade",u:"Quem fez o quê",d:12,k:"T"},
+    {t:"Consent",pt:"Consentimento",u:"LGPD/GDPR",d:12,k:"T"},
+    // Campos Padrão
+    {t:"Id",pt:"Identificador (PK)",u:"GUID/int",d:13,k:"C"},
+    {t:"Code",pt:"Código / número",u:"Código legível",d:13,k:"C"},
+    {t:"Name",pt:"Nome",u:"Texto curto",d:13,k:"C"},
+    {t:"Description",pt:"Descrição",u:"Texto longo",d:13,k:"C"},
+    {t:"Status",pt:"Status",u:"Enum de estado",d:13,k:"C"},
+    {t:"Type",pt:"Tipo",u:"Discriminador",d:13,k:"C"},
+    {t:"IsActive",pt:"Ativo",u:"Flag booleano",d:13,k:"C"},
+    {t:"IsDeleted",pt:"Excluído (soft delete)",u:"Flag booleano",d:13,k:"C"},
+    {t:"CreatedAt",pt:"Data de criação",u:"Auditoria",d:13,k:"C"},
+    {t:"CreatedBy",pt:"Criado por (UserId)",u:"Auditoria",d:13,k:"C"},
+    {t:"UpdatedAt",pt:"Última alteração",u:"Auditoria",d:13,k:"C"},
+    {t:"UpdatedBy",pt:"Alterado por (UserId)",u:"Auditoria",d:13,k:"C"},
+    {t:"DeletedAt",pt:"Data de exclusão",u:"Soft delete",d:13,k:"C"},
+    {t:"RowVersion",pt:"Versão do registro",u:"Concorrência otimista",d:13,k:"C"},
+    {t:"ExternalId",pt:"Identificador externo",u:"Integração (ERP legado)",d:13,k:"C"},
+    {t:"TenantId",pt:"Id do inquilino/empresa",u:"Multi-tenant",d:13,k:"C"},
+    {t:"Amount",pt:"Valor / montante",u:"Decimal",d:13,k:"C"},
+    {t:"Quantity",pt:"Quantidade",u:"Decimal/int",d:13,k:"C"},
+    {t:"Total",pt:"Total",u:"Decimal",d:13,k:"C"},
+    {t:"Date",pt:"Data",u:"Evento",d:13,k:"C"},
+    {t:"StartDate",pt:"Data de início",u:"Vigência",d:13,k:"C"},
+    {t:"EndDate",pt:"Data de fim",u:"Vigência",d:13,k:"C"},
+    {t:"Notes",pt:"Observações",u:"Texto livre",d:13,k:"C"},
+    {t:"Reference",pt:"Referência",u:"Integração",d:13,k:"C"},
+    // Arquitetura
+    {t:"BoundedContext",pt:"Contexto delimitado",u:"DDD",d:14,k:"X"},
+    {t:"AggregateRoot",pt:"Raiz do agregado",u:"DDD",d:14,k:"X"},
+    {t:"DomainEvent",pt:"Evento de domínio",u:"DDD",d:14,k:"X"},
+    {t:"Repository",pt:"Repositório",u:"Padrão de persistência",d:14,k:"X"},
+    {t:"UnitOfWork",pt:"Unidade de trabalho",u:"Persistência",d:14,k:"X"},
+    {t:"CQRS",pt:"Separação leitura/escrita",u:"Arquitetura",d:14,k:"X"},
+    {t:"EventSourcing",pt:"Event sourcing",u:"Arquitetura",d:14,k:"X"},
+    {t:"Migration",pt:"Migração de esquema",u:"EF Core",d:14,k:"X"},
+    {t:"Seed",pt:"Dados iniciais",u:"EF Core",d:14,k:"X"},
+    {t:"Schema",pt:"Esquema",u:"Sales., HR., Finance.",d:14,k:"X"},
+    {t:"View",pt:"Visão / view",u:"Objeto de BD",d:14,k:"X"},
+    {t:"StoredProcedure",pt:"Stored procedure",u:"Objeto de BD",d:14,k:"X"},
+    {t:"Trigger",pt:"Trigger / gatilho",u:"Objeto de BD",d:14,k:"X"},
+    {t:"Index",pt:"Índice",u:"Clusterizado/não clusterizado",d:14,k:"X"},
+    {t:"ForeignKey",pt:"Chave estrangeira (FK)",u:"Relacionamento",d:14,k:"X"},
+    {t:"PrimaryKey",pt:"Chave primária (PK)",u:"Identificador",d:14,k:"X"},
+    {t:"Replication",pt:"Replicação",u:"Escalabilidade",d:14,k:"X"},
+    {t:"Sharding",pt:"Sharding / partição horizontal",u:"Escalabilidade",d:14,k:"X"},
+    {t:"Partitioning",pt:"Particionamento",u:"Performance",d:14,k:"X"},
+    {t:"ReadReplica",pt:"Réplica de leitura",u:"Performance",d:14,k:"X"},
+    {t:"ConnectionString",pt:"String de conexão",u:"Configuração",d:14,k:"X"},
+    {t:"Transaction",pt:"Transação (ACID)",u:"Commit/Rollback",d:14,k:"X"},
+    {t:"Deadlock",pt:"Deadlock / impasse",u:"Concorrência",d:14,k:"X"},
+    {t:"ETL",pt:"Extração/Transformação/Carga",u:"BI",d:14,k:"X"},
+    {t:"DataWarehouse",pt:"Data warehouse",u:"BI/OLAP",d:14,k:"X"},
+    {t:"OLTP",pt:"Processamento transacional",u:"Sistemas operacionais",d:14,k:"X"},
+    {t:"OLAP",pt:"Processamento analítico",u:"BI",d:14,k:"X"}
+  ];
+
+  var state = {q:"", domain:-1};
+  var grid = document.getElementById("grid");
+  var empty = document.getElementById("empty");
+  var countEl = document.getElementById("resultCount");
+  var searchInput = document.getElementById("searchInput");
+  var chipsEl = document.getElementById("chips");
+  document.getElementById("statTerms").textContent = DATA.length;
+
+  // build chips
+  var allChip = document.createElement("button");
+  allChip.className = "chip active rounded-full px-3 py-1.5 text-xs font-medium";
+  allChip.textContent = "Todos (" + DATA.length + ")";
+  allChip.onclick = function(){ setDomain(-1, allChip); };
+  chipsEl.appendChild(allChip);
+  DOMAINS.forEach(function(dom, i){
+    var cnt = DATA.filter(function(x){return x.d===i;}).length;
+    var b = document.createElement("button");
+    b.className = "chip rounded-full px-3 py-1.5 text-xs font-medium";
+    b.innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+dom.c+';margin-right:6px;vertical-align:middle;"></span>' + dom.n + ' <span style="opacity:.6">('+cnt+')</span>';
+    b.onclick = function(){ setDomain(i, b); };
+    chipsEl.appendChild(b);
+  });
+
+  function setDomain(i, btn){
+    state.domain = i;
+    var chips = chipsEl.querySelectorAll(".chip");
+    for(var c=0;c<chips.length;c++) chips[c].classList.remove("active");
+    btn.classList.add("active");
+    render();
+  }
+
+  function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function hl(s, q){
+    if(!q) return esc(s);
+    var re = new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&") + ")", "ig");
+    return esc(s).replace(re, "<mark>$1</mark>");
+  }
+
+  function copyTerm(term, btn){
+    var done = function(){
+      btn.classList.add("copied");
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>';
+      setTimeout(function(){ btn.classList.remove("copied"); btn.innerHTML = orig; }, 1200);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(term).then(done, done);
+    } else { done(); }
+  }
+
+  function render(){
+    var q = state.q.trim().toLowerCase();
+    var filtered = DATA.filter(function(item){
+      if(state.domain !== -1 && item.d !== state.domain) return false;
+      if(!q) return true;
+      return (item.t.toLowerCase().indexOf(q)>-1) || (item.pt.toLowerCase().indexOf(q)>-1) || (item.u.toLowerCase().indexOf(q)>-1) || (DOMAINS[item.d].n.toLowerCase().indexOf(q)>-1);
+    });
+    countEl.textContent = filtered.length;
+    grid.innerHTML = "";
+    if(filtered.length === 0){ empty.classList.remove("hidden"); return; }
+    empty.classList.add("hidden");
+    var frag = document.createDocumentFragment();
+    filtered.forEach(function(item){
+      var dom = DOMAINS[item.d];
+      var card = document.createElement("div");
+      card.className = "term-card rounded-xl p-4";
+      card.innerHTML =
+        '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;">' +
+          '<div class="term-name" style="font-family:\'JetBrains Mono\',monospace;font-weight:600;font-size:15px;color:var(--text);cursor:pointer;word-break:break-word;" title="Clique para copiar">' + hl(item.t, state.q.trim()) + '</div>' +
+          '<button class="copy-btn" title="Copiar termo" style="background:none;border:none;flex-shrink:0;padding:2px;">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div style="font-size:13px;color:var(--accent2);margin-bottom:4px;font-weight:500;">' + hl(item.pt, state.q.trim()) + '</div>' +
+        '<div style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;">' + hl(item.u, state.q.trim()) + '</div>' +
+        '<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">' +
+          '<span class="rounded-full px-2 py-0.5 text-[10px] font-medium" style="background:'+dom.c+'22;color:'+dom.c+';border:1px solid '+dom.c+'55;">' + dom.n + '</span>' +
+          '<span class="kind-'+item.k+' rounded-full px-2 py-0.5 text-[10px] font-medium">' + KIND[item.k] + '</span>' +
+        '</div>';
+      var nameEl = card.querySelector(".term-name");
+      var copyBtn = card.querySelector(".copy-btn");
+      nameEl.onclick = function(){ copyTerm(item.t, copyBtn); };
+      copyBtn.onclick = function(){ copyTerm(item.t, copyBtn); };
+      frag.appendChild(card);
+    });
+    grid.appendChild(frag);
+  }
+
+  searchInput.addEventListener("input", function(){ state.q = this.value; render(); });
+  render();
+})();
+</script>
+</html>
